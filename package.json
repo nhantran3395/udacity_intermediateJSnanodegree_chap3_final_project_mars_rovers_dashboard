@@ -1,0 +1,11 @@
+{
+  "name": "udacity_intermediatejsnanodegree_chap3_final_project_mars_rovers_dashboard",
+  "version": "0.0.1",
+  "description": "Mars Rovers Dashboard - Udacity Intermediate JavaScript nanodegree chapter 3 final project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nhan Thanh Tran",
+  "license": "ISC"
+}
