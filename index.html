@@ -16,19 +16,22 @@
       integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
       crossorigin="anonymous"
     ></script>
+    <!-- Custom StyleSheet -->
+    <link rel="stylesheet" href="./style.css" />
     <title>Mars Rovers Dashboard</title>
   </head>
-  <body class="d-flex vh-100 flex-row">
+  <body class="d-flex min-vh-100 flex-lg-row flex-column">
     <section
-      class="d-flex justify-content-center align-items-center vh-100 flex-column"
-      style="background-color: #1a1a2e; width: 20vw"
+      class="d-flex justify-content-center align-items-center flex-column"
+      style="background-color: #1a1a2e"
+      id="section-rover-selection"
     >
       <div class="container w-75">
-        <h1 class="text-light mb-3">rovers</h1>
+        <h1 class="text-light mb-md-3 mb-2">rovers</h1>
 
         <span class="text-light">select 1 of the 3 rovers</span>
 
-        <div class="accordion bg-primary mt-5" id="accordionExample">
+        <div class="accordion bg-primary mt-md-5 mt-3" id="accordionExample">
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
               <button
@@ -121,17 +124,18 @@
     </section>
 
     <section
-      class="d-flex justify-content-center align-items-center vh-100 flex-column"
-      style="background-color: #16213e; width: 20vw"
+      class="d-flex justify-content-center align-items-center flex-column"
+      style="background-color: #16213e"
+      id="section-camera-selection"
     >
       <div class="container w-75">
-        <h1 class="text-light mb-3">rover camera</h1>
+        <h1 class="text-light mb-md-3 mb-2">rover camera</h1>
 
         <span class="text-light"
           >select the camera that images should be retrieved</span
         >
 
-        <form class="mt-5">
+        <form class="mt-md-5 mt-3">
           <div class="form-check mb-3">
             <input
               class="form-check-input"
@@ -221,8 +225,9 @@
     </section>
 
     <section
-      class="d-flex justify-content-center align-items-center vh-100 flex-column"
-      style="background-color: #0f3460; width: 60vw; overflow-x: auto"
+      class="d-flex justify-content-center align-items-center flex-column"
+      style="background-color: #0f3460; overflow-x: auto"
+      id="section-img-gallery"
     >
       <!-- Gallery -->
       <div class="row" style="width: 85%; height: 85%">
