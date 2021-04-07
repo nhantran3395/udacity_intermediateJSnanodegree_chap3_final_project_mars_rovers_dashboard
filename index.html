@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      crossorigin="anonymous"
+    />
+    <!-- JavaScript Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+      crossorigin="anonymous"
+    ></script>
+    <title>Mars Rovers Dashboard</title>
+  </head>
+  <body class="d-flex vh-100 flex-row">
+    <section
+      class="d-flex justify-content-center align-items-center vh-100 flex-column fixed-top position-absolute top-0 start-0"
+      style="background-color: #1a1a2e; width: 20vw; top: 0%; left: 0%"
+    >
+      <div class="container w-75">
+        <h1 class="text-light mb-3">rovers</h1>
+
+        <span class="text-light">select 1 of the 3 rovers</span>
+
+        <div class="accordion bg-primary mt-5" id="accordionExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button
+                class="accordion-button text-light bg-primary"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseOne"
+                aria-expanded="true"
+                aria-controls="collapseOne"
+              >
+                Curiosity
+              </button>
+            </h2>
+            <div
+              id="collapseOne"
+              class="accordion-collapse collapse show"
+              aria-labelledby="headingOne"
+              data-bs-parent="#accordionExample"
+            >
+              <div class="accordion-body">
+                <span class="text-light">launch date:</span>
+                <span class="text-light">2011/11/26</span> <br />
+                <span class="text-light">landing date:</span>
+                <span class="text-light">2012/08/06</span> <br />
+                <span class="text-light">status:</span>
+                <span class="text-light">active</span> <br />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+              <button
+                class="accordion-button collapsed text-light bg-primary"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseTwo"
+                aria-expanded="false"
+                aria-controls="collapseTwo"
+              >
+                Opportunity
+              </button>
+            </h2>
+            <div
+              id="collapseTwo"
+              class="accordion-collapse collapse"
+              aria-labelledby="headingTwo"
+              data-bs-parent="#accordionExample"
+            >
+              <div class="accordion-body">
+                <span class="text-light">launch date:</span>
+                <span class="text-light">2003/07/07</span> <br />
+                <span class="text-light">landing date:</span>
+                <span class="text-light">2004/01/25</span> <br />
+                <span class="text-light">status:</span>
+                <span class="text-light">complete</span> <br />
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+              <button
+                class="accordion-button collapsed text-light bg-primary"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseThree"
+                aria-expanded="false"
+                aria-controls="collapseThree"
+              >
+                Spirit
+              </button>
+            </h2>
+            <div
+              id="collapseThree"
+              class="accordion-collapse collapse"
+              aria-labelledby="headingThree"
+              data-bs-parent="#accordionExample"
+            >
+              <div class="accordion-body">
+                <span class="text-light">launch date:</span>
+                <span class="text-light">2003/06/10</span> <br />
+                <span class="text-light">landing date:</span>
+                <span class="text-light">2004/01/04</span> <br />
+                <span class="text-light">status:</span>
+                <span class="text-light">complete</span> <br />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="d-flex justify-content-center align-items-center vh-100 flex-column fixed-top position-absolute"
+      style="background-color: #16213e; width: 20vw; top: 0%; left: 20%"
+    >
+      <div class="container w-75">
+        <h1 class="text-light mb-3">rover camera</h1>
+
+        <span class="text-light"
+          >select the camera that images should be retrieved</span
+        >
+
+        <form class="mt-5">
+          <div class="form-check mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="defaultCheck1"
+              checked
+            />
+            <label class="form-check-label text-light" for="defaultCheck1">
+              FHAZ (Front Hazard Avoidance Camera)
+            </label>
+          </div>
+          <div class="form-check mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="defaultCheck2"
+              checked
+            />
+            <label class="form-check-label text-light" for="defaultCheck2">
+              RHAZ (Rear Hazard Avoidance Camera)
+            </label>
+          </div>
+          <div class="form-check mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="defaultCheck2"
+              checked
+            />
+            <label class="form-check-label text-light" for="defaultCheck2">
+              MAST (Mast Camera)
+            </label>
+          </div>
+          <div class="form-check mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="defaultCheck2"
+              checked
+            />
+            <label class="form-check-label text-light" for="defaultCheck2">
+              CHEMCAM (Chemistry and Camera Complex)
+            </label>
+          </div>
+          <div class="form-check mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="defaultCheck2"
+              checked
+            />
+            <label class="form-check-label text-light" for="defaultCheck2">
+              MAHLI (Mars Hand Lens Imager)
+            </label>
+          </div>
+          <div class="form-check mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="defaultCheck2"
+              checked
+            />
+            <label class="form-check-label text-light" for="defaultCheck2">
+              MARDI (Mars Descent Imager)
+            </label>
+          </div>
+          <div class="form-check mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="defaultCheck2"
+              checked
+            />
+            <label class="form-check-label text-light" for="defaultCheck2">
+              NAVCAM (Navigation Camera)
+            </label>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section
+      class="d-flex justify-content-center align-items-center vh-100 flex-column position-absolute"
+      style="
+        background-color: #0f3460;
+        width: 60vw;
+        top: 0%;
+        left: 40%;
+        overflow-x: auto;
+      "
+    >
+      <!-- Gallery -->
+      <div class="row" style="width: 85%; height: 85%">
+        <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+          <img
+            src="./img/sample/curiousity_fhaz_1.jpg"
+            class="w-100 shadow-1-strong rounded mb-4"
+            alt=""
+          />
+
+          <img
+            src="./img/sample/curiousity_mast_2.jpg"
+            class="w-100 shadow-1-strong rounded mb-4"
+            alt=""
+          />
+
+          <img
+            src="./img/sample/curiousity_mast_3.jpg"
+            class="w-100 shadow-1-strong rounded mb-4"
+            alt=""
+          />
+
+          <img
+            src="./img/sample/curiousity_chemcam_2.png"
+            class="w-100 shadow-1-strong rounded mb-4"
+            alt=""
+          />
+
+          <img
+            src="./img/sample/curiousity_mast_5.jpg"
+            class="w-100 shadow-1-strong rounded mb-4"
+            alt=""
+          />
+
+          <img
+            src="./img/sample/curiousity_fhaz_2.jpg"
+            class="w-100 shadow-1-strong rounded mb-4"
+            alt=""
+          />
+        </div>
+
+        <div class="col-lg-4 mb-4 mb-lg-0">
+          <img
+            src="./img/sample/curiousity_rhaz_1.jpg"
+            class="w-100 shadow-1-strong rounded mb-4"
+            alt=""
+          />
+
+          <img
+            src="./img/sample/curiousity_mast_1.jpg"
+            class="w-100 shadow-1-strong rounded mb-4"
+            alt=""
+          />
+
+          <img
+            src="./img/sample/curiousity_navcam_2.jpg"
+            class="w-100 shadow-1-strong rounded mb-4"
+            alt=""
+          />
+
+          <img
+            src="./img/sample/curiousity_rhaz_2.jpg"
+            class="w-100 shadow-1-strong rounded mb-4"
+            alt=""
+          />
+
+          <img
+            src="./img/sample/curiousity_chemcam_3.jpg"
+            class="w-100 shadow-1-strong rounded mb-4"
+            alt=""
+          />
+        </div>
+
+        <div class="col-lg-4 mb-4 mb-lg-0">
+          <img
+            src="./img/sample/curiousity_navcam_1.jpg"
+            class="w-100 shadow-1-strong rounded mb-4"
+            alt=""
+          />
+
+          <img
+            src="./img/sample/curiousity_chemcam_1.jpg"
+            class="w-100 shadow-1-strong rounded mb-4"
+            alt=""
+          />
+
+          <img
+            src="./img/sample/curiousity_mast_4.jpg"
+            class="w-100 shadow-1-strong rounded mb-4"
+            alt=""
+          />
+
+          <img
+            src="./img/sample/curiousity_mast_6.jpg"
+            class="w-100 shadow-1-strong rounded mb-4"
+            alt=""
+          />
+        </div>
+      </div>
+      <!-- Gallery -->
+    </section>
+  </body>
+</html>
