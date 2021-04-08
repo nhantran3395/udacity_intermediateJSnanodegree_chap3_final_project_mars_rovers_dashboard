@@ -16,10 +16,21 @@ app.get('/getRoverImages', async (req, res) => {
   const { rover, cameras } = req.body;
 
   try {
-    const images = await fetch(
-      `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/latest_photos?api_key=${process.env.API_KEY_NASA_OPEN_APIS}`,
-    ).then((response) => response.json());
-    res.send({ images });
+    const images = await Promise.allSettled(
+      cameras.map((camera) =>
+        fetch(
+          `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/latest_photos?camera=${camera}&api_key=${process.env.API_KEY_NASA_OPEN_APIS}`,
+        ),
+      ),
+    )
+      .then((results) =>
+        Promise.allSettled(results.map((result) => result.value.json())),
+      )
+      .then((results) =>
+        results.map((result) => result.value.latest_photos).flat(),
+      );
+
+    res.send(images);
   } catch (err) {
     console.log('error:', err);
   }
