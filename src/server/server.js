@@ -4,6 +4,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 
+const morgan = require('morgan');
+
 const app = express();
 const port = 3000;
 const logger = require('./Logger/Logger');
@@ -14,6 +16,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/', express.static(path.join(__dirname, '../public')));
+
+app.use(
+  morgan('short', {
+    stream: { write: (message) => logger.info(message.trim()) },
+  }),
+);
 
 app.get('/getRoverImages', async (req, res) => {
   const { rover, cameras } = req.body;

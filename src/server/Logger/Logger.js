@@ -22,4 +22,8 @@ const logger = createLogger({
   transports: [new transports.Console()],
 });
 
+logger.stream = {
+  write: (message, encoding) => logger.info(message),
+};
+
 module.exports = logger;
