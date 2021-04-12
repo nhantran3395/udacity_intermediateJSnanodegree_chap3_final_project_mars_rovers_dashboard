@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const cors = require('cors');
 
 const morgan = require('morgan');
 
@@ -23,7 +24,7 @@ app.use(
   }),
 );
 
-app.get('/getRoverImages', async (req, res) => {
+app.get('/getRoverImages', cors(), async (req, res) => {
   const { rover, cameras } = req.body;
   let images = [];
 
