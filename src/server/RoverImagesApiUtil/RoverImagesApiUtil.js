@@ -31,6 +31,9 @@ const LIST_OF_POSSIBLE_CAMERAS_FOR_SPIRIT = [
 const checkArrayIsSubsetUtil = (arrayToCheck, arrayTarget) =>
   arrayToCheck.every((val) => arrayTarget.includes(val));
 
+const checkCamerasIsValidUtil = (cameras, listOfPossbileCameras) =>
+  checkArrayIsSubsetUtil(cameras, listOfPossbileCameras);
+
 const roverAndCamerasInputValidator = (rover, cameras) => {
   const roverLowerCased = rover.toLowerCase();
 
@@ -50,7 +53,7 @@ const roverAndCamerasInputValidator = (rover, cameras) => {
 
   if (roverLowerCased === 'curiosity') {
     if (
-      !checkArrayIsSubsetUtil(cameras, LIST_OF_POSSIBLE_CAMERAS_FOR_CURIOSITY)
+      !checkCamerasIsValidUtil(cameras, LIST_OF_POSSIBLE_CAMERAS_FOR_CURIOSITY)
     ) {
       isCamerasSupported = false;
     }
@@ -58,14 +61,19 @@ const roverAndCamerasInputValidator = (rover, cameras) => {
 
   if (roverLowerCased === 'opportunity') {
     if (
-      !checkArrayIsSubsetUtil(cameras, LIST_OF_POSSIBLE_CAMERAS_FOR_OPPORTUNITY)
+      !checkCamerasIsValidUtil(
+        cameras,
+        LIST_OF_POSSIBLE_CAMERAS_FOR_OPPORTUNITY,
+      )
     ) {
       isCamerasSupported = false;
     }
   }
 
   if (roverLowerCased === 'spirit') {
-    if (!checkArrayIsSubsetUtil(cameras, LIST_OF_POSSIBLE_CAMERAS_FOR_SPIRIT)) {
+    if (
+      !checkCamerasIsValidUtil(cameras, LIST_OF_POSSIBLE_CAMERAS_FOR_SPIRIT)
+    ) {
       isCamerasSupported = false;
     }
   }

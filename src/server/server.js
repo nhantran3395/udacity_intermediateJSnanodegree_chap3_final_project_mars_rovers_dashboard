@@ -25,11 +25,21 @@ app.use(
 );
 
 app.get('/getRoverImages', cors(), async (req, res) => {
-  const { rover, cameras } = req.body;
+  const rover = req.query.rover;
+  const cameras = req.query.cameras;
+
+  let cameraList = [];
+
+  if (!Array.isArray(cameras)) {
+    cameraList = [cameras];
+  } else {
+    cameraList = cameras;
+  }
+
   let images = [];
 
   try {
-    images = await fetchRoverImagesFromEachSelectedCamera(rover, cameras);
+    images = await fetchRoverImagesFromEachSelectedCamera(rover, cameraList);
   } catch (error) {
     logger.error(error);
   }
