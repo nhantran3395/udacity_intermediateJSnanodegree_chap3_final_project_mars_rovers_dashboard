@@ -12,6 +12,7 @@
   "rules": {
     "no-undef": "warn",
     "no-shadow": "warn",
-    "no-unused-vars": "warn"
+    "no-unused-vars": "warn",
+    "prefer-destructuring": "warn"
   }
 }
