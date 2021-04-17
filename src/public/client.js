@@ -6,19 +6,10 @@ const store = {
 
 const imgContainer = document.getElementById('img-container');
 
-const render = async (imgContainer, state) => {
-  imgContainer.innerHTML = Gallery(state);
-};
-
-const updateStore = (store, newState) => {
-  store = Object.assign(store, newState);
-  render(imgContainer, store);
-};
-
 const splitImagesToGroups = (images) => {
-  let images1 = [];
-  let images2 = [];
-  let images3 = [];
+  const images1 = [];
+  const images2 = [];
+  const images3 = [];
 
   images.forEach((image, idx) => {
     if (idx % 3 === 0) {
@@ -37,7 +28,21 @@ const splitImagesToGroups = (images) => {
   return [images1, images2, images3];
 };
 
-const displayImagesOnEachCol = (images) => {
+const displaySpinners = () => `
+  <div class="mx-auto d-flex align-items-center justify-content-center">
+    <div class="spinner-grow text-primary m-2" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="spinner-grow text-primary m-2" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="spinner-grow text-primary m-2" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+`;
+
+const putImagesOntoEachCol = (images) => {
   let imgs = '';
 
   images.forEach((image) => {
@@ -53,45 +58,61 @@ const displayImagesOnEachCol = (images) => {
   return imgs;
 };
 
+const displayImages = (imagesAfterSplit) => `
+  <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+  ${putImagesOntoEachCol(imagesAfterSplit[0])}
+  </div>
+
+  <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+  ${putImagesOntoEachCol(imagesAfterSplit[1])}
+  </div>
+
+  <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+  ${putImagesOntoEachCol(imagesAfterSplit[2])}
+  </div>
+`;
+
 const Gallery = (state) => {
   let { images } = state;
 
+  const isGalleryLoading = images.length === 0;
+
+  if (isGalleryLoading) {
+    return displaySpinners();
+  }
+
   const imagesAfterSplit = splitImagesToGroups(images);
 
-  return `  
-  <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-    ${displayImagesOnEachCol(imagesAfterSplit[0])}
-  </div>
-
-  <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-    ${displayImagesOnEachCol(imagesAfterSplit[1])}
-  </div>
-
-  <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-    ${displayImagesOnEachCol(imagesAfterSplit[2])}
-  </div>
-  `;
+  return displayImages(imagesAfterSplit);
 };
 
-const rover = 'curiosity';
-const cameras = ['fhaz', 'rhaz'];
+const render = async (imgContainer, state) => {
+  imgContainer.innerHTML = Gallery(state);
+};
 
-const url = new URL('http://localhost:3000/getRoverImages');
-
-const query = new URLSearchParams();
-
-query.append('rover', rover);
-cameras.forEach((camera) => query.append('cameras', camera));
-
-url.search = query.toString();
+const updateStore = (store, newState) => {
+  store = Object.assign(store, newState);
+  render(imgContainer, store);
+};
 
 const getRoverImages = () => {
+  const rover = 'curiosity';
+  const cameras = ['fhaz', 'rhaz'];
+  const url = new URL('http://localhost:3000/getRoverImages');
+  const query = new URLSearchParams();
+  query.append('rover', rover);
+  cameras.forEach((camera) => query.append('cameras', camera));
+  url.search = query.toString();
+
+  render(imgContainer, store);
+
   fetch(url)
     .then((res) => res.json())
     .then((images) => {
       updateStore(store, { images });
-      console.log(store);
     });
 };
 
-getRoverImages();
+window.addEventListener('load', () => {
+  getRoverImages();
+});
