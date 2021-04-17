@@ -73,7 +73,7 @@ const displayImages = (imagesAfterSplit) => `
 `;
 
 const Gallery = (state) => {
-  let { images } = state;
+  const { images } = state;
 
   const isGalleryLoading = images.length === 0;
 
@@ -95,9 +95,7 @@ const updateStore = (store, newState) => {
   render(imgContainer, store);
 };
 
-const getRoverImages = () => {
-  const rover = 'curiosity';
-  const cameras = ['fhaz', 'rhaz'];
+const getRoverImages = (rover, cameras) => {
   const url = new URL('http://localhost:3000/getRoverImages');
   const query = new URLSearchParams();
   query.append('rover', rover);
@@ -114,5 +112,31 @@ const getRoverImages = () => {
 };
 
 window.addEventListener('load', () => {
-  getRoverImages();
+  const rover = 'curiosity';
+
+  const cameras = [
+    'fhaz',
+    'rhaz',
+    'mast',
+    'chemcam',
+    'mahli',
+    'mardi',
+    'navcam',
+  ];
+
+  render(imgContainer, store);
+  getRoverImages(rover, cameras);
+});
+
+const formSelectCameras = document.forms['form-select-cameras'];
+
+formSelectCameras.addEventListener('submit', function formSubmitHandler(event) {
+  event.preventDefault();
+
+  const formData = new FormData(this);
+  const entries = formData.entries();
+  const data = Object.fromEntries(entries);
+
+  const cameras = Object.keys(data);
+  getRoverImages('curiosity', cameras);
 });
