@@ -13,6 +13,8 @@
     "no-undef": "warn",
     "no-shadow": "warn",
     "no-unused-vars": "warn",
-    "prefer-destructuring": "warn"
+    "prefer-destructuring": "warn",
+    "no-restricted-syntax": "warn",
+    "guard-for-in": "warn"
   }
 }
