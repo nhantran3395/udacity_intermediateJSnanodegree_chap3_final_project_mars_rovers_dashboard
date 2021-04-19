@@ -129,6 +129,24 @@ window.addEventListener('load', () => {
 });
 
 const formSelectCameras = document.forms['form-select-cameras'];
+const firstCheck1FormSelectCameras = document.getElementById(
+  'check-1-form-select-cameras',
+);
+
+const isObjectEmptyUtil = (obj) => {
+  for (var i in obj) return false;
+  return true;
+};
+
+const isCameraSelectionsValid = (selection) => {
+  if (isObjectEmptyUtil(selection)) {
+    firstCheck1FormSelectCameras.classList.add('is-invalid');
+    return false;
+  }
+
+  firstCheck1FormSelectCameras.classList.remove('is-invalid');
+  return true;
+};
 
 formSelectCameras.addEventListener('submit', function formSubmitHandler(event) {
   event.preventDefault();
@@ -136,6 +154,10 @@ formSelectCameras.addEventListener('submit', function formSubmitHandler(event) {
   const formData = new FormData(this);
   const entries = formData.entries();
   const data = Object.fromEntries(entries);
+
+  if (!isCameraSelectionsValid(data)) return;
+
+  console.log('hit api');
 
   const cameras = Object.keys(data);
   getRoverImages('curiosity', cameras);
