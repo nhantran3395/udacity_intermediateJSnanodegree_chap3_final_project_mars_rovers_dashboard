@@ -1,7 +1,7 @@
 const store = {
   rovers: ['Curiosity', 'Opportunity', 'Spirit'],
   cameras: [],
-  images: [],
+  images: null,
 };
 
 const imgContainer = document.getElementById('img-container');
@@ -42,6 +42,14 @@ const displaySpinners = () => `
   </div>
 `;
 
+const displayImageNotFound = () => `
+  <div class="mx-auto d-flex align-items-center justify-content-center flex-column">
+    <img src="../../img/moon-rover.svg" class="img-thumbnail mb-5" alt="uh oh image not found" style="width:200px">
+    <span class="text-light">Uh oh the images cannot be found.</span> <br>
+    <span class="text-light">Please try again with different camaras or different rover.</span>
+  </div>
+`;
+
 const putImagesOntoEachCol = (images) => {
   let imgs = '';
 
@@ -75,10 +83,15 @@ const displayImages = (imagesAfterSplit) => `
 const Gallery = (state) => {
   const { images } = state;
 
-  const isGalleryLoading = images.length === 0;
+  const isGalleryLoading = images === null;
+  const isImageNotFound = !isGalleryLoading ? images.length === 0 : null;
 
   if (isGalleryLoading) {
     return displaySpinners();
+  }
+
+  if (isImageNotFound) {
+    return displayImageNotFound();
   }
 
   const imagesAfterSplit = splitImagesToGroups(images);
@@ -157,8 +170,8 @@ formSelectCameras.addEventListener('submit', function formSubmitHandler(event) {
 
   if (!isCameraSelectionsValid(data)) return;
 
-  console.log('hit api');
-
   const cameras = Object.keys(data);
+
+  updateStore(store, { images: null });
   getRoverImages('curiosity', cameras);
 });
