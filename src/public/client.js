@@ -62,8 +62,8 @@ const SPIRIT = new Rover(
 );
 
 const store = {
-  rovers: ['Curiosity', 'Opportunity', 'Spirit'],
-  cameras: [],
+  rover: CURIOSITY.name,
+  cameras: CURIOSITY.cameras.map((camera) => camera.name),
   images: null,
 };
 
@@ -174,6 +174,7 @@ const updateStore = (store, newState) => {
 const getRoverImages = (rover, cameras) => {
   const url = new URL('http://localhost:3000/getRoverImages');
   const query = new URLSearchParams();
+
   query.append('rover', rover);
   cameras.forEach((camera) => query.append('cameras', camera));
   url.search = query.toString();
@@ -188,20 +189,8 @@ const getRoverImages = (rover, cameras) => {
 };
 
 window.addEventListener('load', () => {
-  const rover = 'curiosity';
-
-  const cameras = [
-    'fhaz',
-    'rhaz',
-    'mast',
-    'chemcam',
-    'mahli',
-    'mardi',
-    'navcam',
-  ];
-
   render(imgContainer, store);
-  getRoverImages(rover, cameras);
+  getRoverImages(store.rover, store.cameras);
 });
 
 const formSelectCameras = document.forms['form-select-cameras'];
@@ -235,8 +224,8 @@ formSelectCameras.addEventListener('submit', function formSubmitHandler(event) {
 
   const cameras = Object.keys(data);
 
-  updateStore(store, { images: null });
-  getRoverImages('curiosity', cameras);
+  updateStore(store, { images: null, cameras });
+  getRoverImages(store.rover, store.cameras);
 });
 
 const roverSelectButtons = document.querySelectorAll(
@@ -247,19 +236,23 @@ roverSelectButtons.forEach((button) =>
   button.addEventListener('click', (event) => {
     const roverSelection = event.target.value;
 
-    console.log(roverSelection);
-
     switch (roverSelection) {
       case CURIOSITY.name.toLowerCase():
-        console.log(CURIOSITY);
+        updateStore(store, {
+          rover: CURIOSITY.name,
+          cameras: CURIOSITY.cameras,
+        });
         break;
 
       case OPPORTUNITY.name.toLowerCase():
-        console.log(OPPORTUNITY);
+        updateStore(store, {
+          rover: OPPORTUNITY.name,
+          cameras: OPPORTUNITY.cameras,
+        });
         break;
 
       case SPIRIT.name.toLowerCase():
-        console.log(SPIRIT);
+        updateStore(store, { rover: SPIRIT.name, cameras: SPIRIT.cameras });
         break;
 
       default:
