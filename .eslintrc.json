@@ -15,6 +15,7 @@
     "no-unused-vars": "warn",
     "prefer-destructuring": "warn",
     "no-restricted-syntax": "warn",
-    "guard-for-in": "warn"
+    "guard-for-in": "warn",
+    "max-classes-per-file": "off"
   }
 }

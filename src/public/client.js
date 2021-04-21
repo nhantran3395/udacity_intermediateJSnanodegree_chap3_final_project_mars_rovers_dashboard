@@ -1,3 +1,66 @@
+class Camera {
+  constructor(name, fullName) {
+    this.name = name;
+    this.fullName = fullName;
+  }
+}
+
+class Rover {
+  constructor(name, landingDate, launchDate, status, cameras) {
+    this.name = name;
+    this.landingDate = landingDate;
+    this.launchDate = launchDate;
+    this.status = status;
+    this.cameras = cameras;
+  }
+}
+
+const roverStatus = {
+  ACTIVE: 'active',
+  COMPLETE: 'complete',
+};
+
+const FHAZ = new Camera('FHAZ', 'Front Hazard Avoidance Camera');
+const RHAZ = new Camera('RHAZ', 'Rear Hazard Avoidance Camera');
+const MAST = new Camera('MAST', 'Mast Camera');
+const CHEMCAM = new Camera('CHEMCAM', 'Chemistry and Camera Complex');
+const MAHLI = new Camera('MAHLI', 'Mars Hand Lens Imager');
+const MARDI = new Camera('MARDI', 'Mars Descent Imager');
+const NAVCAM = new Camera('NAVCAM', 'Navigation Camera');
+const PANCAM = new Camera('PANCAM', 'Panoramic Camera');
+const MINITES = new Camera(
+  'MINITES',
+  'Minitature Thermal Emission Spectrometer (Mini-TES)',
+);
+
+const CURIOSITY_CAMERAS = [FHAZ, RHAZ, MAST, CHEMCAM, MAHLI, MARDI, NAVCAM];
+const OPPORTUNITY_CAMERAS = [FHAZ, RHAZ, NAVCAM, PANCAM, MINITES];
+const SPIRIT_CAMERAS = [FHAZ, RHAZ, NAVCAM, PANCAM, MINITES];
+
+const CURIOSITY = new Rover(
+  'Curiosity',
+  '2012-08-06',
+  '2011-11-26',
+  roverStatus.ACTIVE,
+  CURIOSITY_CAMERAS,
+);
+
+const OPPORTUNITY = new Rover(
+  'Opportunity',
+  '2004-01-25',
+  '2003-07-07',
+  roverStatus.COMPLETE,
+  OPPORTUNITY_CAMERAS,
+);
+
+const SPIRIT = new Rover(
+  'Spirit',
+  '2004-01-04',
+  '2003-06-10',
+  roverStatus.COMPLETE,
+  SPIRIT_CAMERAS,
+);
+
 const store = {
   rovers: ['Curiosity', 'Opportunity', 'Spirit'],
   cameras: [],
@@ -175,3 +238,32 @@ formSelectCameras.addEventListener('submit', function formSubmitHandler(event) {
   updateStore(store, { images: null });
   getRoverImages('curiosity', cameras);
 });
+
+const roverSelectButtons = document.querySelectorAll(
+  '#accordion-button-select-rover',
+);
+
+roverSelectButtons.forEach((button) =>
+  button.addEventListener('click', (event) => {
+    const roverSelection = event.target.value;
+
+    console.log(roverSelection);
+
+    switch (roverSelection) {
+      case CURIOSITY.name.toLowerCase():
+        console.log(CURIOSITY);
+        break;
+
+      case OPPORTUNITY.name.toLowerCase():
+        console.log(OPPORTUNITY);
+        break;
+
+      case SPIRIT.name.toLowerCase():
+        console.log(SPIRIT);
+        break;
+
+      default:
+        throw new Error('Rover is not valid');
+    }
+  }),
+);
