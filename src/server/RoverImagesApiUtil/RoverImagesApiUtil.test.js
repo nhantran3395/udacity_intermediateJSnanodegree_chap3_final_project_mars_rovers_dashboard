@@ -50,11 +50,18 @@ describe('test fetch rover image by each selected camera', () => {
   });
 
   test('should return data when rover and cameras are correct', async () => {
-    const images = await fetchRoverImagesFromEachSelectedCamera('spirit', [
+    const images1 = await fetchRoverImagesFromEachSelectedCamera('spirit', [
       'fhaz',
       'rhaz',
     ]);
 
-    expect(images).toBeInstanceOf(Array);
+    expect(images1).toBeInstanceOf(Array);
+
+    const images2 = await fetchRoverImagesFromEachSelectedCamera('CURIOSITY', [
+      'MAST',
+      'NAVCAM',
+    ]);
+
+    expect(images2).toBeInstanceOf(Array);
   });
 });

@@ -31,8 +31,10 @@ const LIST_OF_POSSIBLE_CAMERAS_FOR_SPIRIT = [
 const checkArrayIsSubsetUtil = (arrayToCheck, arrayTarget) =>
   arrayToCheck.every((val) => arrayTarget.includes(val));
 
-const checkCamerasIsValidUtil = (cameras, listOfPossbileCameras) =>
-  checkArrayIsSubsetUtil(cameras, listOfPossbileCameras);
+const checkCamerasIsValidUtil = (cameras, listOfPossbileCameras) => {
+  const camerasLowerCased = cameras.map((camera) => camera.toLowerCase());
+  return checkArrayIsSubsetUtil(camerasLowerCased, listOfPossbileCameras);
+};
 
 const roverAndCamerasInputValidator = (rover, cameras) => {
   const roverLowerCased = rover.toLowerCase();
@@ -51,31 +53,30 @@ const roverAndCamerasInputValidator = (rover, cameras) => {
 
   let isCamerasSupported = true;
 
-  if (roverLowerCased === 'curiosity') {
-    if (
-      !checkCamerasIsValidUtil(cameras, LIST_OF_POSSIBLE_CAMERAS_FOR_CURIOSITY)
-    ) {
-      isCamerasSupported = false;
-    }
-  }
+  switch (roverLowerCased) {
+    case 'curiosity':
+      isCamerasSupported = checkCamerasIsValidUtil(
+        cameras,
+        LIST_OF_POSSIBLE_CAMERAS_FOR_CURIOSITY,
+      );
+      break;
 
-  if (roverLowerCased === 'opportunity') {
-    if (
-      !checkCamerasIsValidUtil(
+    case 'opportunity':
+      isCamerasSupported = checkCamerasIsValidUtil(
         cameras,
         LIST_OF_POSSIBLE_CAMERAS_FOR_OPPORTUNITY,
-      )
-    ) {
-      isCamerasSupported = false;
-    }
-  }
+      );
+      break;
 
-  if (roverLowerCased === 'spirit') {
-    if (
-      !checkCamerasIsValidUtil(cameras, LIST_OF_POSSIBLE_CAMERAS_FOR_SPIRIT)
-    ) {
-      isCamerasSupported = false;
-    }
+    case 'spirit':
+      isCamerasSupported = checkCamerasIsValidUtil(
+        cameras,
+        LIST_OF_POSSIBLE_CAMERAS_FOR_SPIRIT,
+      );
+      break;
+
+    default:
+      throw new Error('rover name is invalid');
   }
 
   if (!isCamerasSupported) {
