@@ -179,8 +179,6 @@ const getRoverImages = (rover, cameras) => {
   cameras.forEach((camera) => query.append('cameras', camera));
   url.search = query.toString();
 
-  render(imgContainer, store);
-
   fetch(url)
     .then((res) => res.json())
     .then((images) => {
