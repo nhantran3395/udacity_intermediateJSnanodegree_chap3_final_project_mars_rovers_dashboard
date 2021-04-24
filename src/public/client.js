@@ -118,11 +118,16 @@ const putImagesOntoEachCol = (images) => {
 
   images.forEach((image) => {
     imgs += `
-        <img
+    <div class="img-box mb-4">
+      <img
         src=${image.img_src}
-        class="w-100 shadow-1-strong rounded mb-4"
+        class="w-100 shadow-1-strong rounded"
         alt=""
       />
+      <div class="overlay">
+        <div class="text">Hello World</div>
+      </div>
+    </div>
     `;
   });
 
