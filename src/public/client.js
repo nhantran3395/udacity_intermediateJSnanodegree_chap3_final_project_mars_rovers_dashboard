@@ -124,8 +124,9 @@ const putImagesOntoEachCol = (images) => {
         class="w-100 shadow-1-strong rounded"
         alt=""
       />
-      <div class="overlay">
-        <div class="text">Hello World</div>
+      <div class="overlay d-flex flex-column align-items-center justify-content-center">
+        <span class="text-light">Photo taken on ${image.earth_date}</span> 
+        <span class="text-light">Camera: ${image.camera.name}</span>
       </div>
     </div>
     `;
