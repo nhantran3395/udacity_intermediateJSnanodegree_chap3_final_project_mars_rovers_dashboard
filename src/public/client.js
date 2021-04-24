@@ -107,7 +107,7 @@ const displaySpinners = () => `
 
 const displayImageNotFound = () => `
   <div class="mx-auto d-flex align-items-center justify-content-center flex-column">
-    <img src="../../img/moon-rover.svg" class="img-thumbnail mb-5" alt="uh oh image not found" style="width:200px">
+    <img src="./Assets/img/moon-rover.svg" class="img-thumbnail mb-5" alt="uh oh image not found" style="width:200px">
     <span class="text-light">Uh oh the images cannot be found.</span> <br>
     <span class="text-light">Please try again with different camaras or different rover.</span>
   </div>
@@ -115,7 +115,7 @@ const displayImageNotFound = () => `
 
 const displayServerError = () => `
   <div class="mx-auto d-flex align-items-center justify-content-center flex-column">
-    <img src="../../img/server-error.svg" class="img-thumbnail mb-5" alt="uh oh server error" style="width:200px">
+    <img src="./Assets/img/server-error.svg" class="img-thumbnail mb-5" alt="uh oh server error" style="width:200px">
     <span class="text-light">Uh oh look like there is something wrong with our server.</span> <br>
     <span class="text-light">Please try again later.</span>
   </div>
