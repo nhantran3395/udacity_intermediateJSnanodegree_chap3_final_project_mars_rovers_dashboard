@@ -166,6 +166,12 @@ const cameraSelectionContainer = document.getElementById(
   'camera-selection-container',
 );
 
+const isCameraSelectedPreviously = (state, currentCamera) => {
+  const { cameras } = state;
+
+  return cameras.includes(currentCamera.name);
+};
+
 const displaySelections = (rover) => {
   let selections = '';
 
@@ -195,7 +201,7 @@ const displaySelections = (rover) => {
         class="form-check-input"
         type="checkbox"
         name=${camera.name}
-        checked
+        ${isCameraSelectedPreviously(store, camera) ? 'checked' : ''}
       />
       <label class="form-check-label text-light" for="defaultCheck1">
         ${camera.name} (${camera.fullName})
