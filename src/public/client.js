@@ -15,7 +15,7 @@ class Rover {
   }
 }
 
-const roverStatus = {
+const ROVER_STATUS = {
   ACTIVE: 'active',
   COMPLETE: 'complete',
 };
@@ -41,7 +41,7 @@ const CURIOSITY = new Rover(
   'Curiosity',
   '2012-08-06',
   '2011-11-26',
-  roverStatus.ACTIVE,
+  ROVER_STATUS.ACTIVE,
   CURIOSITY_CAMERAS,
 );
 
@@ -49,7 +49,7 @@ const OPPORTUNITY = new Rover(
   'Opportunity',
   '2004-01-25',
   '2003-07-07',
-  roverStatus.COMPLETE,
+  ROVER_STATUS.COMPLETE,
   OPPORTUNITY_CAMERAS,
 );
 
@@ -57,7 +57,7 @@ const SPIRIT = new Rover(
   'Spirit',
   '2004-01-04',
   '2003-06-10',
-  roverStatus.COMPLETE,
+  ROVER_STATUS.COMPLETE,
   SPIRIT_CAMERAS,
 );
 
