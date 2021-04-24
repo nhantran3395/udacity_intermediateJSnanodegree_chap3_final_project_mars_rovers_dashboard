@@ -113,6 +113,14 @@ const displayImageNotFound = () => `
   </div>
 `;
 
+const displayServerError = () => `
+  <div class="mx-auto d-flex align-items-center justify-content-center flex-column">
+    <img src="../../img/server-error.svg" class="img-thumbnail mb-5" alt="uh oh server error" style="width:200px">
+    <span class="text-light">Uh oh look like there is something wrong with our server.</span> <br>
+    <span class="text-light">Please try again later.</span>
+  </div>
+`;
+
 const putImagesOntoEachCol = (images) => {
   let imgs = '';
 
@@ -151,6 +159,10 @@ const displayImages = (imagesAfterSplit) => `
 
 const Gallery = (state) => {
   const { images } = state;
+
+  if (images instanceof Error) {
+    return displayServerError();
+  }
 
   const isGalleryLoading = images === null;
   const isImageNotFound = !isGalleryLoading ? images.length === 0 : null;
@@ -252,6 +264,9 @@ const getRoverImages = (rover, cameras) => {
     .then((res) => res.json())
     .then((images) => {
       updateStore(store, { images });
+    })
+    .catch((error) => {
+      updateStore(store, { images: new Error() });
     });
 };
 
