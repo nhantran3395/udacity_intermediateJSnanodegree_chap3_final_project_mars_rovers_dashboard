@@ -162,8 +162,65 @@ const Gallery = (state) => {
   return displayImages(imagesAfterSplit);
 };
 
+const cameraSelectionContainer = document.getElementById(
+  'camera-selection-container',
+);
+
+const displaySelections = (rover) => {
+  let selections = '';
+
+  let roverCameras = null;
+
+  switch (rover) {
+    case CURIOSITY.name:
+      roverCameras = CURIOSITY_CAMERAS;
+      break;
+
+    case OPPORTUNITY.name:
+      roverCameras = OPPORTUNITY_CAMERAS;
+      break;
+
+    case SPIRIT.name:
+      roverCameras = SPIRIT_CAMERAS;
+      break;
+
+    default:
+      throw new Error('Rover is not valid');
+  }
+
+  roverCameras.forEach((camera, idx) => {
+    selections += `
+    <div class="form-check mb-3" id="check-${idx}-form-select-cameras">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        name=${camera.name}
+        checked
+      />
+      <label class="form-check-label text-light" for="defaultCheck1">
+        ${camera.name} (${camera.fullName})
+      </label>
+    </div>
+  `;
+  });
+
+  selections += `
+  <div class="invalid-feedback">
+  Please select at least 1 camera to continue
+  </div>
+  `;
+
+  return selections;
+};
+
+const CameraSelections = (state) => {
+  const { rover } = state;
+  return displaySelections(rover);
+};
+
 const render = async (imgContainer, state) => {
   imgContainer.innerHTML = Gallery(state);
+  cameraSelectionContainer.innerHTML = CameraSelections(state);
 };
 
 const updateStore = (store, newState) => {
@@ -192,9 +249,6 @@ window.addEventListener('load', () => {
 });
 
 const formSelectCameras = document.forms['form-select-cameras'];
-const firstCheck1FormSelectCameras = document.getElementById(
-  'check-1-form-select-cameras',
-);
 
 const isObjectEmptyUtil = (obj) => {
   for (var i in obj) return false;
@@ -202,6 +256,10 @@ const isObjectEmptyUtil = (obj) => {
 };
 
 const isCameraSelectionsValid = (selection) => {
+  const firstCheck1FormSelectCameras = document.getElementById(
+    'check-1-form-select-cameras',
+  );
+
   if (isObjectEmptyUtil(selection)) {
     firstCheck1FormSelectCameras.classList.add('is-invalid');
     return false;
@@ -238,19 +296,28 @@ roverSelectButtons.forEach((button) =>
       case CURIOSITY.name.toLowerCase():
         updateStore(store, {
           rover: CURIOSITY.name,
-          cameras: CURIOSITY.cameras,
+          cameras: CURIOSITY.cameras.map((camera) => camera.name),
+          images: null,
         });
+        getRoverImages(store.rover, store.cameras);
         break;
 
       case OPPORTUNITY.name.toLowerCase():
         updateStore(store, {
           rover: OPPORTUNITY.name,
-          cameras: OPPORTUNITY.cameras,
+          cameras: OPPORTUNITY.cameras.map((camera) => camera.name),
+          images: null,
         });
+        getRoverImages(store.rover, store.cameras);
         break;
 
       case SPIRIT.name.toLowerCase():
-        updateStore(store, { rover: SPIRIT.name, cameras: SPIRIT.cameras });
+        updateStore(store, {
+          rover: SPIRIT.name,
+          cameras: SPIRIT.cameras.map((camera) => camera.name),
+          images: null,
+        });
+        getRoverImages(store.rover, store.cameras);
         break;
 
       default:
