@@ -69,28 +69,6 @@ const store = {
 
 const imgContainer = document.getElementById('img-container');
 
-const splitImagesToGroups = (images) => {
-  const images1 = [];
-  const images2 = [];
-  const images3 = [];
-
-  images.forEach((image, idx) => {
-    if (idx % 3 === 0) {
-      images1.push(image);
-    }
-
-    if (idx % 3 === 1) {
-      images2.push(image);
-    }
-
-    if (idx % 3 === 2) {
-      images3.push(image);
-    }
-  });
-
-  return [images1, images2, images3];
-};
-
 const displaySpinners = () => `
   <div class="mx-auto d-flex align-items-center justify-content-center">
     <div class="spinner-grow text-primary m-2" role="status">
@@ -121,7 +99,29 @@ const displayServerError = () => `
   </div>
 `;
 
-const putImagesOntoEachCol = (images) => {
+const splitImagesToGroupsUtil = (images) => {
+  const images1 = [];
+  const images2 = [];
+  const images3 = [];
+
+  images.forEach((image, idx) => {
+    if (idx % 3 === 0) {
+      images1.push(image);
+    }
+
+    if (idx % 3 === 1) {
+      images2.push(image);
+    }
+
+    if (idx % 3 === 2) {
+      images3.push(image);
+    }
+  });
+
+  return [images1, images2, images3];
+};
+
+const putImagesOntoEachColUtil = (images) => {
   let imgs = '';
 
   images.forEach((image) => {
@@ -145,15 +145,15 @@ const putImagesOntoEachCol = (images) => {
 
 const displayImages = (imagesAfterSplit) => `
   <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-  ${putImagesOntoEachCol(imagesAfterSplit[0])}
+  ${putImagesOntoEachColUtil(imagesAfterSplit[0])}
   </div>
 
   <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-  ${putImagesOntoEachCol(imagesAfterSplit[1])}
+  ${putImagesOntoEachColUtil(imagesAfterSplit[1])}
   </div>
 
   <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-  ${putImagesOntoEachCol(imagesAfterSplit[2])}
+  ${putImagesOntoEachColUtil(imagesAfterSplit[2])}
   </div>
 `;
 
@@ -175,7 +175,7 @@ const Gallery = (state) => {
     return displayImageNotFound();
   }
 
-  const imagesAfterSplit = splitImagesToGroups(images);
+  const imagesAfterSplit = splitImagesToGroupsUtil(images);
 
   return displayImages(imagesAfterSplit);
 };
