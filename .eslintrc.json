@@ -16,6 +16,7 @@
     "prefer-destructuring": "warn",
     "no-restricted-syntax": "warn",
     "guard-for-in": "warn",
-    "max-classes-per-file": "off"
+    "max-classes-per-file": "off",
+    "no-param-reassign": "warn"
   }
 }
