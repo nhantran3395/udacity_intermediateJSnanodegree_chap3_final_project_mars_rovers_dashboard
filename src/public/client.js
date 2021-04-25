@@ -51,8 +51,10 @@ window.addEventListener('load', () => {
 const formSelectCameras = document.forms['form-select-cameras'];
 
 const isObjectEmptyUtil = (obj) => {
-  for (let i in obj) return false;
-  return true;
+  if (Object.keys(obj).length === 0) {
+    return true;
+  }
+  return false;
 };
 
 const isCameraSelectionsValid = (selection) => {
