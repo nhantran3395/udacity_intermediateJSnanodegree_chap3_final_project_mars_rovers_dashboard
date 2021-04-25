@@ -11,14 +11,14 @@ const cameraSelectionContainer = document.getElementById(
   'camera-selection-container',
 );
 
-const render = async (imgContainer, state) => {
+const render = async (imgContainer, cameraSelectionContainer, state) => {
   imgContainer.innerHTML = Gallery(state);
   cameraSelectionContainer.innerHTML = CameraSelections(state);
 };
 
 const updateStore = (state, newState) => {
   store = state.merge(newState);
-  render(imgContainer, store);
+  render(imgContainer, cameraSelectionContainer, store);
 };
 
 const getRoverImages = (rover, cameras) => {
@@ -44,7 +44,7 @@ const getRoverImages = (rover, cameras) => {
 };
 
 window.addEventListener('load', () => {
-  render(imgContainer, store);
+  render(imgContainer, cameraSelectionContainer, store);
   getRoverImages(store.get('rover'), store.get('cameras'));
 });
 
