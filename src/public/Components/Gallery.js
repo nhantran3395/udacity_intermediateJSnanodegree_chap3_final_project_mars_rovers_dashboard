@@ -36,13 +36,9 @@ const splitImagesToGroupsUtil = (images) => {
   images.forEach((image, idx) => {
     if (idx % 3 === 0) {
       images1 = images1.push(image);
-    }
-
-    if (idx % 3 === 1) {
+    } else if (idx % 3 === 1) {
       images2 = images2.push(image);
-    }
-
-    if (idx % 3 === 2) {
+    } else if (idx % 3 === 2) {
       images3 = images3.push(image);
     }
   });
