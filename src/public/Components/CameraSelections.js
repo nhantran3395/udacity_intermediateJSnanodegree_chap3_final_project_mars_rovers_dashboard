@@ -1,7 +1,6 @@
 const isCameraSelectedPreviously = (state, currentCamera) => {
-  const { cameras } = state;
-
-  return cameras.includes(currentCamera.name);
+  const cameras = state.get('cameras');
+  return cameras.includes(currentCamera.get('name'));
 };
 
 const displaySelections = (rover) => {
@@ -10,15 +9,15 @@ const displaySelections = (rover) => {
   let roverCameras = null;
 
   switch (rover) {
-    case CURIOSITY.name:
+    case CURIOSITY.get('name'):
       roverCameras = CURIOSITY_CAMERAS;
       break;
 
-    case OPPORTUNITY.name:
+    case OPPORTUNITY.get('name'):
       roverCameras = OPPORTUNITY_CAMERAS;
       break;
 
-    case SPIRIT.name:
+    case SPIRIT.get('name'):
       roverCameras = SPIRIT_CAMERAS;
       break;
 
@@ -27,16 +26,20 @@ const displaySelections = (rover) => {
   }
 
   roverCameras.forEach((camera, idx) => {
+    const name = camera.get('name');
+    const fullName = camera.get('fullName');
+    const selected = isCameraSelectedPreviously(store, camera) ? 'checked' : '';
+
     selections += `
       <div class="form-check mb-3" id="check-${idx}-form-select-cameras">
         <input
           class="form-check-input"
           type="checkbox"
-          name=${camera.name}
-          ${isCameraSelectedPreviously(store, camera) ? 'checked' : ''}
+          name=${name}
+          ${selected}
         />
         <label class="form-check-label text-light" for="defaultCheck1">
-          ${camera.name} (${camera.fullName})
+          ${name} (${fullName})
         </label>
       </div>
     `;
@@ -52,6 +55,6 @@ const displaySelections = (rover) => {
 };
 
 const CameraSelections = (state) => {
-  const { rover } = state;
+  const rover = state.get('rover');
   return displaySelections(rover);
 };

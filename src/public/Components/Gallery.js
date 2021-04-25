@@ -29,41 +29,45 @@ const displayServerError = () => `
 `;
 
 const splitImagesToGroupsUtil = (images) => {
-  const images1 = [];
-  const images2 = [];
-  const images3 = [];
+  let images1 = Immutable.List([]);
+  let images2 = Immutable.List([]);
+  let images3 = Immutable.List([]);
 
   images.forEach((image, idx) => {
     if (idx % 3 === 0) {
-      images1.push(image);
+      images1 = images1.push(image);
     }
 
     if (idx % 3 === 1) {
-      images2.push(image);
+      images2 = images2.push(image);
     }
 
     if (idx % 3 === 2) {
-      images3.push(image);
+      images3 = images3.push(image);
     }
   });
 
-  return [images1, images2, images3];
+  return Immutable.List([images1, images2, images3]);
 };
 
 const putImagesOntoEachColUtil = (images) => {
   let imgs = '';
 
   images.forEach((image) => {
+    const imgSrc = image.get('img_src');
+    const earthDate = image.get('earth_date');
+    const cameraName = image.get('camera').name;
+
     imgs += `
     <div class="img-box mb-4">
       <img
-        src=${image.img_src}
+        src=${imgSrc}
         class="w-100 shadow-1-strong rounded"
         alt=""
       />
       <div class="overlay d-flex flex-column align-items-center justify-content-center">
-        <span class="text-light">Photo taken on ${image.earth_date}</span> 
-        <span class="text-light">Camera: ${image.camera.name}</span>
+        <span class="text-light">Photo taken on ${earthDate}</span> 
+        <span class="text-light">Camera: ${cameraName}</span>
       </div>
     </div>
     `;
@@ -74,27 +78,27 @@ const putImagesOntoEachColUtil = (images) => {
 
 const displayImages = (imagesAfterSplit) => `
   <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-  ${putImagesOntoEachColUtil(imagesAfterSplit[0])}
+  ${putImagesOntoEachColUtil(imagesAfterSplit.get(0))}
   </div>
 
   <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-  ${putImagesOntoEachColUtil(imagesAfterSplit[1])}
+  ${putImagesOntoEachColUtil(imagesAfterSplit.get(1))}
   </div>
 
   <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-  ${putImagesOntoEachColUtil(imagesAfterSplit[2])}
+  ${putImagesOntoEachColUtil(imagesAfterSplit.get(2))}
   </div>
 `;
 
 const Gallery = (state) => {
-  const { images } = state;
+  const images = state.get('images');
 
   if (images instanceof Error) {
     return displayServerError();
   }
 
   const isGalleryLoading = images === null;
-  const isImageNotFound = !isGalleryLoading ? images.length === 0 : null;
+  const isImageNotFound = !isGalleryLoading ? images.size === 0 : null;
 
   if (isGalleryLoading) {
     return displaySpinners();
