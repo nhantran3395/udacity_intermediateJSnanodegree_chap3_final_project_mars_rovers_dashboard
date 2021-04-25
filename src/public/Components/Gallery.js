@@ -94,11 +94,12 @@ const Gallery = (state) => {
   }
 
   const isGalleryLoading = images === null;
-  const isImageNotFound = !isGalleryLoading ? images.size === 0 : null;
 
   if (isGalleryLoading) {
     return displaySpinners();
   }
+
+  const isImageNotFound = !isGalleryLoading ? images.size === 0 : null;
 
   if (isImageNotFound) {
     return displayImageNotFound();
