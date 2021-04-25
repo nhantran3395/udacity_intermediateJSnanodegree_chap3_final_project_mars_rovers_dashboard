@@ -4,6 +4,7 @@
   "description": "Mars Rovers Dashboard - Udacity Intermediate JavaScript nanodegree chapter 3 final project",
   "main": "index.js",
   "scripts": {
+    "start": "node src/server/server.js",
     "test": "jest --coverage"
   },
   "author": "Nhan Thanh Tran",
