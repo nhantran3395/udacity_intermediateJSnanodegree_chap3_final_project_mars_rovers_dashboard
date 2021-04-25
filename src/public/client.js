@@ -1,9 +1,9 @@
 // Set up global store with Curiosity as default rover, all cameras of Curiosity as default camera selections
-const store = {
-  rover: CURIOSITY.name,
-  cameras: CURIOSITY.cameras.map((camera) => camera.name),
+let store = Immutable.Map({
+  rover: CURIOSITY.get('name'),
+  cameras: CURIOSITY.get('cameras').map((camera) => camera.get('name')),
   images: null,
-};
+});
 
 const imgContainer = document.getElementById('img-container');
 
@@ -16,8 +16,8 @@ const render = async (imgContainer, state) => {
   cameraSelectionContainer.innerHTML = CameraSelections(state);
 };
 
-const updateStore = (store, newState) => {
-  store = Object.assign(store, newState);
+const updateStore = (state, newState) => {
+  store = state.merge(newState);
   render(imgContainer, store);
 };
 
@@ -26,22 +26,26 @@ const getRoverImages = (rover, cameras) => {
   const query = new URLSearchParams();
 
   query.append('rover', rover);
+
   cameras.forEach((camera) => query.append('cameras', camera));
   url.search = query.toString();
 
   fetch(url)
     .then((res) => res.json())
-    .then((images) => {
-      updateStore(store, { images });
+    .then((imagesRaw) => {
+      const images = Immutable.List(
+        imagesRaw.map((imageRaw) => Immutable.Map(imageRaw)),
+      );
+      updateStore(store, Immutable.Map({ images }));
     })
     .catch((error) => {
-      updateStore(store, { images: new Error() });
+      updateStore(store, Immutable.Map({ images: new Error() }));
     });
 };
 
 window.addEventListener('load', () => {
   render(imgContainer, store);
-  getRoverImages(store.rover, store.cameras);
+  getRoverImages(store.get('rover'), store.get('cameras'));
 });
 
 const formSelectCameras = document.forms['form-select-cameras'];
@@ -74,10 +78,10 @@ formSelectCameras.addEventListener('submit', function formSubmitHandler(event) {
 
   if (!isCameraSelectionsValid(data)) return;
 
-  const cameras = Object.keys(data);
+  const cameras = Immutable.List(Object.keys(data));
 
-  updateStore(store, { images: null, cameras });
-  getRoverImages(store.rover, store.cameras);
+  updateStore(store, Immutable.Map({ images: null, cameras }));
+  getRoverImages(store.get('rover'), store.get('cameras'));
 });
 
 const roverSelectButtons = document.querySelectorAll(
@@ -89,31 +93,44 @@ roverSelectButtons.forEach((button) =>
     const roverSelection = event.target.value;
 
     switch (roverSelection) {
-      case CURIOSITY.name.toLowerCase():
-        updateStore(store, {
-          rover: CURIOSITY.name,
-          cameras: CURIOSITY.cameras.map((camera) => camera.name),
-          images: null,
-        });
-        getRoverImages(store.rover, store.cameras);
+      case CURIOSITY.get('name').toLowerCase():
+        updateStore(
+          store,
+          Immutable.Map({
+            rover: CURIOSITY.get('name'),
+            cameras: CURIOSITY.get('cameras').map((camera) =>
+              camera.get('name'),
+            ),
+            images: null,
+          }),
+        );
+        getRoverImages(store.get('rover'), store.get('cameras'));
         break;
 
-      case OPPORTUNITY.name.toLowerCase():
-        updateStore(store, {
-          rover: OPPORTUNITY.name,
-          cameras: OPPORTUNITY.cameras.map((camera) => camera.name),
-          images: null,
-        });
-        getRoverImages(store.rover, store.cameras);
+      case OPPORTUNITY.get('name').toLowerCase():
+        updateStore(
+          store,
+          Immutable.Map({
+            rover: OPPORTUNITY.get('name'),
+            cameras: OPPORTUNITY.get('cameras').map((camera) =>
+              camera.get('name'),
+            ),
+            images: null,
+          }),
+        );
+        getRoverImages(store.get('rover'), store.get('cameras'));
         break;
 
-      case SPIRIT.name.toLowerCase():
-        updateStore(store, {
-          rover: SPIRIT.name,
-          cameras: SPIRIT.cameras.map((camera) => camera.name),
-          images: null,
-        });
-        getRoverImages(store.rover, store.cameras);
+      case SPIRIT.get('name').toLowerCase():
+        updateStore(
+          store,
+          Immutable.Map({
+            rover: SPIRIT.get('name'),
+            cameras: SPIRIT.get('cameras').map((camera) => camera.get('name')),
+            images: null,
+          }),
+        );
+        getRoverImages(store.get('rover'), store.get('cameras'));
         break;
 
       default:
