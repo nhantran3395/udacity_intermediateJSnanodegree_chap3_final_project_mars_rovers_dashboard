@@ -1,34 +1,34 @@
-const isCameraSelectedPreviously = (state, currentCamera) => {
-  const cameras = state.get('cameras');
-  return cameras.includes(currentCamera.get('name'));
-};
+const isCameraSelectedPreviously = (cameras, currentCamera) =>
+  cameras.includes(currentCamera.get('name'));
 
-const displaySelections = (rover) => {
+const displaySelections = (rover, cameras) => {
   let selections = '';
 
-  let roverCameras = null;
+  let roverPossibleCameras = null;
 
   switch (rover) {
     case CURIOSITY.get('name'):
-      roverCameras = CURIOSITY_CAMERAS;
+      roverPossibleCameras = CURIOSITY_CAMERAS;
       break;
 
     case OPPORTUNITY.get('name'):
-      roverCameras = OPPORTUNITY_CAMERAS;
+      roverPossibleCameras = OPPORTUNITY_CAMERAS;
       break;
 
     case SPIRIT.get('name'):
-      roverCameras = SPIRIT_CAMERAS;
+      roverPossibleCameras = SPIRIT_CAMERAS;
       break;
 
     default:
       throw new Error('Rover is not valid');
   }
 
-  roverCameras.forEach((camera, idx) => {
+  roverPossibleCameras.forEach((camera, idx) => {
     const name = camera.get('name');
     const fullName = camera.get('fullName');
-    const selected = isCameraSelectedPreviously(store, camera) ? 'checked' : '';
+    const selected = isCameraSelectedPreviously(cameras, camera)
+      ? 'checked'
+      : '';
 
     selections += `
       <div class="form-check mb-3" id="check-${idx}-form-select-cameras">
@@ -56,5 +56,7 @@ const displaySelections = (rover) => {
 
 const CameraSelections = (state) => {
   const rover = state.get('rover');
-  return displaySelections(rover);
+  const cameras = state.get('cameras');
+
+  return displaySelections(rover, cameras);
 };
