@@ -39,7 +39,7 @@ const getRoverImages = (rover, cameras) => {
       updateStore(store, Immutable.Map({ images }));
     })
     .catch((error) => {
-      updateStore(store, Immutable.Map({ images: new Error() }));
+      updateStore(store, Immutable.Map({ images: error }));
     });
 };
 
