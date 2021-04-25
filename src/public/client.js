@@ -51,7 +51,7 @@ window.addEventListener('load', () => {
 const formSelectCameras = document.forms['form-select-cameras'];
 
 const isObjectEmptyUtil = (obj) => {
-  for (var i in obj) return false;
+  for (let i in obj) return false;
   return true;
 };
 
